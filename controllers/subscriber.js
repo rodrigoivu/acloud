@@ -27,22 +27,22 @@ client.on('message', (topic, message) => {
 	// 	}
 	// 	insertaRotopalauno(items);
 	// }
-	if(topic == 'aplik/esfuerzo/rotopalauno'){
+	if(topic == 'aplik/humedad/rotopalauno'){
 		items.timestamp= new Date(items.timestamp); 
 		saveRotopalaUnoHumedad(items);
 	}
 
-	if(topic == 'aplik/esfuerzo/rotopalados'){
+	if(topic == 'aplik/humedad/rotopalados'){
 		items.timestamp= new Date(items.timestamp); 
 		saveRotopalaDosHumedad(items);
 	}
 
-	if(topic == 'aplik/esfuerzo/spreader'){
+	if(topic == 'aplik/humedad/spreader'){
 		items.timestamp= new Date(items.timestamp); 
 		saveSpreaderHumedad(items);
 	}
 
-	if(topic == 'aplik/esfuerzo/estacion'){
+	if(topic == 'aplik/humedad/estacion'){
 		items.timestamp= new Date(items.timestamp); 
 		saveEstacion(items);
 	}
