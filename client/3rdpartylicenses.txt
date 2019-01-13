@@ -173,6 +173,8 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 @angular/material/select
 
+@angular/material/progress-spinner
+
 @angular/material/paginator
 
 @angular/material/sort
@@ -1829,8 +1831,6 @@ ngx-quill
 MIT
 
 calendar-utils/date-adapters/date-fns
-
-@angular/material/progress-spinner
 
 ng2-file-upload
 MIT
