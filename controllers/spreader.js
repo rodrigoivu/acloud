@@ -37,7 +37,8 @@ function registraItem(req,res){
 function itemsTodos(req,res){
 	//OJO CAMBIAR NOMBRE DE COLLECCION Y CAMPOS SEGÚN LA CONSULTA
 	Spreader.find({}) 
-	   .sort([['timestamp', 1]])	
+	   //.sort([['timestamp', 1]])
+	   .sort({ _id: 'asc' })
 	   .exec(
 	   		(err, itemsFound) => {
 	   			if (err){
@@ -66,7 +67,8 @@ function itemsRangoUltimos(req,res){
 	Spreader.find({})
 	   .skip(0)
 	   .limit(items)
-	   .sort([['timestamp', -1]])	
+	   //.sort([['timestamp', -1]])
+	   .sort({ _id: 'desc' })
 	   .exec(
 	   		(err, itemsFound) => {
 	   			if (err){
@@ -101,7 +103,8 @@ function itemsRangoFechas(req,res){
 					    '$lte': (new Date(hasta)).getTime()
 						}
 					})
-	   .sort([['timestamp', 1]])	
+	   //.sort([['timestamp', 1]])
+	   .sort({ _id: 'asc' })	
 	   .exec(
 	   		(err, itemsFound) => {
 	   			if (err){
@@ -131,14 +134,15 @@ function itemUltimo(req,res){
 	//OJO CAMBIAR NOMBRE DE COLLECCION Y CAMPOS SEGÚN LA CONSULTA
 	Spreader.findOne({}) 
 	   //.sort([['timestamp', -1]])
-	   .sort({ timestamp: -1 })
+	   //.sort({ timestamp: -1 })
+	   .sort({ _id: 'desc' })
 	   .exec(
 	   		(err, itemsFound) => {
 	   			if (err){
 	   				res.status(500).send({message: 'Error cargando items'});
 	   			}else{
 	   				res.status(200).send({
-								items: itemsFound
+						items: itemsFound
 					});
 	   			}
 	   		});

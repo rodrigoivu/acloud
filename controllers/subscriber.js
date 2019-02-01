@@ -5,9 +5,11 @@ var Spreader = require('../models/spreader');
 var Estacion = require('../models/estacion');
 var Harnero = require('../models/harnero');
 var Chancador = require('../models/chancador');
+var Controllerbateriaharnero = require('../controllers/bateriaharnero');
+var Controllerbateriachancador = require('../controllers/bateriachancador');
 
 //var client  = mqtt.connect('mqtt://192.168.0.8')
-var client  = mqtt.connect('mqtt://165.227.26.150')
+var client  = mqtt.connect('mqtt://165.227.26.150') //esta conectado al mqtt de desimat
 client.on('connect', () => {
     client.subscribe('aplik/humedad/rotopalauno');
     client.subscribe('aplik/humedad/rotopalados');
@@ -15,12 +17,13 @@ client.on('connect', () => {
     client.subscribe('aplik/humedad/estacion');
     client.subscribe('aplik/esfuerzo/harnero');
     client.subscribe('aplik/esfuerzo/chancador');
+    client.subscribe('aplik/esfuerzo/bateriaharnero');
+    client.subscribe('aplik/esfuerzo/bateriachancador');
 })
 client.on('message', (topic, message) => {
 
     var items;
    	items = JSON.parse(message);
-
 	// if(topic == 'aplik/humedad/rotopalauno'){
 	// 	for (var i = 0; i < items.length; i++) {
 	// 	items[i].timestamp= new Date(items[i].timestamp); 
@@ -36,7 +39,7 @@ client.on('message', (topic, message) => {
 		items.timestamp= new Date(items.timestamp); 
 		saveRotopalaDosHumedad(items);
 	}
-
+	
 	if(topic == 'aplik/humedad/spreader'){
 		items.timestamp= new Date(items.timestamp); 
 		saveSpreaderHumedad(items);
@@ -55,6 +58,15 @@ client.on('message', (topic, message) => {
 		items.timestamp= new Date(items.timestamp); 
 		saveChancador(items);
 	}
+	if(topic == 'aplik/esfuerzo/bateriaharnero'){
+		//items.timestamp= new Date(items.timestamp); 
+		saveBateriaHarnero(items);
+	}
+	if(topic == 'aplik/esfuerzo/bateriachancador'){
+		//items.timestamp= new Date(items.timestamp); 
+		saveBateriaChancador(items);
+	}
+	
 	
 })
 //================================================
@@ -68,9 +80,9 @@ function saveRotopalaUnoHumedad(item){
 			return console.error(err);
 		}else{
 			if(!itemStored){
-				//console.log('Imposible registrar item');
+				// console.log('Imposible registrar item');
 			}else{
-				//console.log('Item insertado');
+				// console.log('Item insertado');
 			}
 		}
 	});
@@ -86,9 +98,9 @@ function saveRotopalaDosHumedad(item){
 			return console.error(err);
 		}else{
 			if(!itemStored){
-				//console.log('Imposible registrar item');
+				// console.log('Imposible registrar item');
 			}else{
-				//console.log('Item insertado');
+				// console.log('Item insertado');
 			}
 		}
 	});
@@ -104,9 +116,9 @@ function saveSpreaderHumedad(item){
 			return console.error(err);
 		}else{
 			if(!itemStored){
-				//console.log('Imposible registrar item');
+				// console.log('Imposible registrar item');
 			}else{
-				//console.log('Item insertado');
+				// console.log('Item insertado');
 			}
 		}
 	});
@@ -129,9 +141,9 @@ function saveEstacion(item){
 			return console.error(err);
 		}else{
 			if(!itemStored){
-				//console.log('Imposible registrar item');
+				// console.log('Imposible registrar item');
 			}else{
-				//console.log('Item insertado');
+				 //console.log('Item insertado');
 			}
 		}
 	});
@@ -192,7 +204,19 @@ function saveChancador(item){
 	});
 }
 
+//================================================
+// SAVE BATERIA HARNERO
+//================================================
+function saveBateriaHarnero(item){
+	Controllerbateriaharnero.actualizaItem(item);
+}
 
+//================================================
+// SAVE BATERIA CHANCADOR
+//================================================
+function saveBateriaChancador(item){
+	Controllerbateriachancador.actualizaItem(item);
+}
 //================================================
 // INSERTAR ROTOPALAUNO VARIOS
 //================================================

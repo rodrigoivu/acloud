@@ -16,6 +16,9 @@ var harnero_routes = require('./routes/harnero');
 var rotopalados_routes = require('./routes/rotopalados');
 var rotopalauno_routes = require('./routes/rotopalauno');
 var spreader_routes = require('./routes/spreader');
+var configuracion_routes = require('./routes/configuracion');
+var bateriaharnero_routes = require('./routes/bateriaharnero');
+var bateriachancador_routes = require('./routes/bateriachancador');
 // create application/x-www-form-urlencoded parser
 app.use(bodyParser.urlencoded({extended:false}));
 // create application/json parser
@@ -39,6 +42,9 @@ app.use('/api', harnero_routes);
 app.use('/api', rotopalados_routes);
 app.use('/api', rotopalauno_routes);
 app.use('/api', spreader_routes);
+app.use('/api', configuracion_routes);
+app.use('/api', bateriaharnero_routes);
+app.use('/api', bateriachancador_routes);
 
 app.get('*', function(req,res,next){
 	res.sendFile(path.resolve('./client/index.html'));

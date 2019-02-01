@@ -25,8 +25,10 @@ var port = process.env.PORT || 3782;
 
 //var publisher = require('./publisher');
 var subscriber = require('./controllers/subscriber');
+var bateriaharnero = require('./controllers/bateriaharnero');
+var bateriachancador = require('./controllers/bateriachancador');
 // var PublisherController = require('./controllers/publisher');
-
+//var Publisher = require('./publisher');
 
 //mongoose: comandos para manejo de mongodb
 var mongoose = require('mongoose');
@@ -45,6 +47,10 @@ if (err) {
 	//Conectar el Servidor de Api's mediante http
 	const server = app.listen(port, function(){
     console.log("Servidor de Api's de desimat cloud escuchando en http://localhost:" + port);
+    //Consultar o crear estados de bateria
+    bateriaharnero.crearSensores();
+    bateriachancador.crearSensores();
+
 	});
 
 	// const io = socket.listen(server);

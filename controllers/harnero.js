@@ -37,7 +37,9 @@ function registraItem(req,res){
 function itemsTodos(req,res){
 	//OJO CAMBIAR NOMBRE DE COLLECCION Y CAMPOS SEGÚN LA CONSULTA
 	Harnero.find({}) 
-	   .sort([['timestamp', 1]])	
+	   //.sort([['timestamp', 1]])
+	   .sort({ _id: 'asc' })
+	   .maxTimeMS(300)
 	   .exec(
 	   		(err, itemsFound) => {
 	   			if (err){
@@ -66,7 +68,8 @@ function itemsRangoUltimos(req,res){
 	Harnero.find({})
 	   .skip(0)
 	   .limit(items)
-	   .sort([['timestamp', -1]])	
+	   //.sort([['timestamp', -1]])
+	   .sort({ _id: 'desc' })
 	   .exec(
 	   		(err, itemsFound) => {
 	   			if (err){
@@ -101,7 +104,8 @@ function itemsRangoFechas(req,res){
 					    '$lte': (new Date(hasta)).getTime()
 						}
 					})
-	   .sort([['timestamp', 1]])	
+	   //.sort([['timestamp', 1]])
+	   .sort({ _id: 'asc' })
 	   .exec(
 	   		(err, itemsFound) => {
 	   			if (err){
@@ -131,7 +135,8 @@ function itemUltimo(req,res){
 	//OJO CAMBIAR NOMBRE DE COLLECCION Y CAMPOS SEGÚN LA CONSULTA
 	Harnero.findOne({}) 
 	   //.sort([['timestamp', -1]])
-	   .sort({ timestamp: -1 })
+	   //.sort({ timestamp: -1 })
+	   .sort({ _id: 'desc' })
 	   .exec(
 	   		(err, itemsFound) => {
 	   			if (err){
