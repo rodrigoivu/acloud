@@ -30,32 +30,39 @@ client.on('message', (topic, message) => {
 	// 	}
 	// 	insertaRotopalauno(items);
 	// }
+	var date = new Date;//MODIFICAR CON EL TIME STAMP LOCAL
 	if(topic == 'aplik/humedad/rotopalauno'){
-		items.timestamp= new Date(items.timestamp); 
+		//items.timestamp= new Date(items.timestamp);
+		items.timestamp= new Date(date); 
 		saveRotopalaUnoHumedad(items);
 	}
 
 	if(topic == 'aplik/humedad/rotopalados'){
-		items.timestamp= new Date(items.timestamp); 
+		//items.timestamp= new Date(items.timestamp);
+		items.timestamp= new Date(date); 
 		saveRotopalaDosHumedad(items);
 	}
 	
 	if(topic == 'aplik/humedad/spreader'){
-		items.timestamp= new Date(items.timestamp); 
+		//items.timestamp= new Date(items.timestamp);
+		items.timestamp= new Date(date); 
 		saveSpreaderHumedad(items);
 	}
 
 	if(topic == 'aplik/humedad/estacion'){
-		items.timestamp= new Date(items.timestamp); 
+		//items.timestamp= new Date(items.timestamp);
+		items.timestamp= new Date(date); 
 		saveEstacion(items);
 	}
 
 	if(topic == 'aplik/esfuerzo/harnero'){
-		items.timestamp= new Date(items.timestamp); 
+		//items.timestamp= new Date(items.timestamp);
+		items.timestamp= new Date(date); 
 		saveHarnero(items);
 	}
 	if(topic == 'aplik/esfuerzo/chancador'){
-		items.timestamp= new Date(items.timestamp); 
+		//items.timestamp= new Date(items.timestamp);
+		items.timestamp= new Date(date); 
 		saveChancador(items);
 	}
 	if(topic == 'aplik/esfuerzo/bateriaharnero'){
