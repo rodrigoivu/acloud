@@ -10,10 +10,10 @@ var md_auth = require('../middlewares/authenticated');
 // var multipart = require('connect-multiparty');
 // var md_upload = multipart({ uploadDir: './uploads/imgObjeto'});
 
- api.post('/registra-harnero',[md_auth.ensureAuth, md_auth.ensureAdminUser], HarneroController.registraItem);
- api.get('/harnero-todos',[md_auth.ensureAuth,md_auth.ensureAdminUser], HarneroController.itemsTodos);
- api.get('/harnero-ultimo',[md_auth.ensureAuth,md_auth.ensureAdminUser], HarneroController.itemUltimo);
- api.get('/harnero-rango-fechas',[md_auth.ensureAuth,md_auth.ensureAdminUser], HarneroController.itemsRangoFechas);
- api.get('/harnero-rango-ultimos',[md_auth.ensureAuth,md_auth.ensureAdminUser], HarneroController.itemsRangoUltimos);
- api.delete('/borra-harnero/:id',[md_auth.ensureAuth,md_auth.ensureAdminUser], HarneroController.deleteItem);
+ api.post('/registra-harnero',[md_auth.ensureAuth, md_auth.ensureAdminAvanzadoEsfuerzo], HarneroController.registraItem);
+ api.get('/harnero-todos',[md_auth.ensureAuth,md_auth.ensureAdminAvanzadoEsfuerzo], HarneroController.itemsTodos);
+ api.get('/harnero-ultimo',[md_auth.ensureAuth,md_auth.ensureAdminAvanzadoEsfuerzo], HarneroController.itemUltimo);
+ api.get('/harnero-rango-fechas',[md_auth.ensureAuth,md_auth.ensureAdminAvanzadoEsfuerzo], HarneroController.itemsRangoFechas);
+ api.get('/harnero-rango-ultimos',[md_auth.ensureAuth,md_auth.ensureAdminAvanzadoEsfuerzo], HarneroController.itemsRangoUltimos);
+ api.delete('/borra-harnero/:id',[md_auth.ensureAuth,md_auth.ensureAdminAvanzadoEsfuerzo], HarneroController.deleteItem);
 module.exports = api;

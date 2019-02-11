@@ -10,10 +10,10 @@ var md_auth = require('../middlewares/authenticated');
 // var multipart = require('connect-multiparty');
 // var md_upload = multipart({ uploadDir: './uploads/imgObjeto'});
 
- api.post('/registra-spreader',[md_auth.ensureAuth, md_auth.ensureAdminUser], SpreaderController.registraItem);
- api.get('/spreader-todos',[md_auth.ensureAuth,md_auth.ensureAdminUser], SpreaderController.itemsTodos);
- api.get('/spreader-ultimo',[md_auth.ensureAuth,md_auth.ensureAdminUser], SpreaderController.itemUltimo);
- api.get('/spreader-rango-fechas',[md_auth.ensureAuth,md_auth.ensureAdminUser], SpreaderController.itemsRangoFechas);
- api.get('/spreader-rango-ultimos',[md_auth.ensureAuth,md_auth.ensureAdminUser], SpreaderController.itemsRangoUltimos);
- api.delete('/borra-spreader/:id',[md_auth.ensureAuth,md_auth.ensureAdminUser], SpreaderController.deleteItem);
+ api.post('/registra-spreader',[md_auth.ensureAuth, md_auth.ensureAdminAvanzadoHumedad], SpreaderController.registraItem);
+ api.get('/spreader-todos',[md_auth.ensureAuth,md_auth.ensureAdminAvanzadoHumedad], SpreaderController.itemsTodos);
+ api.get('/spreader-ultimo',[md_auth.ensureAuth,md_auth.ensureAdminAvanzadoHumedad], SpreaderController.itemUltimo);
+ api.get('/spreader-rango-fechas',[md_auth.ensureAuth,md_auth.ensureAdminAvanzadoHumedad], SpreaderController.itemsRangoFechas);
+ api.get('/spreader-rango-ultimos',[md_auth.ensureAuth,md_auth.ensureAdminAvanzadoHumedad], SpreaderController.itemsRangoUltimos);
+ api.delete('/borra-spreader/:id',[md_auth.ensureAuth,md_auth.ensureAdminAvanzadoHumedad], SpreaderController.deleteItem);
 module.exports = api;
