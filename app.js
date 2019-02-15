@@ -19,6 +19,8 @@ var spreader_routes = require('./routes/spreader');
 var configuracion_routes = require('./routes/configuracion');
 var bateriaharnero_routes = require('./routes/bateriaharnero');
 var bateriachancador_routes = require('./routes/bateriachancador');
+var idharnero_routes = require('./routes/idharnero');
+var idchancador_routes = require('./routes/idchancador');
 // create application/x-www-form-urlencoded parser
 app.use(bodyParser.urlencoded({extended:false}));
 // create application/json parser
@@ -45,6 +47,8 @@ app.use('/api', spreader_routes);
 app.use('/api', configuracion_routes);
 app.use('/api', bateriaharnero_routes);
 app.use('/api', bateriachancador_routes);
+app.use('/api', idharnero_routes);
+app.use('/api', idchancador_routes);
 
 app.get('*', function(req,res,next){
 	res.sendFile(path.resolve('./client/index.html'));

@@ -27,6 +27,8 @@ var port = process.env.PORT || 3782;
 var subscriber = require('./controllers/subscriber');
 var bateriaharnero = require('./controllers/bateriaharnero');
 var bateriachancador = require('./controllers/bateriachancador');
+var idchancador = require('./controllers/idchancador');
+var idharnero = require('./controllers/idharnero');
 // var PublisherController = require('./controllers/publisher');
 //var Publisher = require('./publisher');
 
@@ -50,6 +52,8 @@ if (err) {
     //Consultar o crear estados de bateria
     bateriaharnero.crearSensores();
     bateriachancador.crearSensores();
+    idharnero.crearSensores();
+    idchancador.crearSensores();
 
 	});
 

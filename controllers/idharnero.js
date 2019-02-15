@@ -1,6 +1,6 @@
 'use strict'
 //OJO CAMBIAR NOMBRE DE COLLECCION Y MODEL SEGÚN LA CONSULTA
-var Bateriaharnero = require('../models/bateriaharnero');
+var Idharnero = require('../models/idharnero');
 var idItem;
 
 //================================================
@@ -9,14 +9,13 @@ var idItem;
 function registraItem(){
 	var date= new Date;
 	//OJO CAMBIAR NOMBRE DE COLLECCION SEGÚN LA CONSULTA
-	var item = new Bateriaharnero({
-						timestamp:date,
-						estado1:0,
-						estado2:0,
-						estado3:0,
-						estado4:0,
-						estado5:0,
-						estado6:0
+	var item = new Idharnero({
+						sensor_1:'sensor1',
+						sensor_2:'sensor2',
+						sensor_3:'sensor3',
+						sensor_4:'sensor4',
+						sensor_5:'sensor5',
+						sensor_6:'sensor6'
 					});
 	//OJO CAMBIAR CONDICIONES SEGÚN MODELO
 	item.save((err, itemStored) => {
@@ -34,45 +33,44 @@ function registraItem(){
 }
 
 function crearSensores(){
-	Bateriaharnero.findOne({}) 
+	Idharnero.findOne({}) 
 	   .exec((err, itemsFound) => {
-	   			if (err){
-	   				console.log("err: "+ err);
-	   			}else{
-	   				if(!itemsFound){
+   			if (err){
+   				console.log("err: "+ err);
+   			}else{
+   				if(!itemsFound){
 						console.log("no hay datos");
 						registraItem();
-					}else{
-						idItem=itemsFound._id;
-						console.log("si hay datos de idharnero id:"+idItem);
-					}
-	   			}
-	   		});
+				}else{
+					idItem=itemsFound._id;
+					console.log("si hay datos de idharnero id:"+idItem);
+				}
+   			}
+   		});
 }
 
 //================================================
 // ACTUALIZAR UN ITEM
 //================================================
-function actualizaItem(item){
-	var date = new Date;
-	//var date = new Date(item.timestamp); //ver si se asigna el tiempo aqui o desde el dato recibido
-	var itemA={
-			timestamp:date,
-			estado1:item.estado1,
-			estado2:item.estado2,
-			estado3:item.estado3,
-			estado4:item.estado4,
-			estado5:item.estado5,
-			estado6:item.estado6
-		  }
+function actualizaItem(req,res){
+	var itemId = req.params.id; 
+	var params = req.body;      
  	//OJO CAMBIAR NOMBRE DE COLLECCION SEGÚN LA CONSULTA
-	Bateriaharnero.findByIdAndUpdate(idItem, itemA, { new: true }, (err, itemUpdated) => { 
+	Idharnero.findByIdAndUpdate(itemId, params, { new: true }, (err, itemUpdated) => { 
 		if(err){
-			console.log("err: "+ err);
+			res.status(500).send({
+				error: err,
+				message: 'Error al actualizar item'
+			});
 		}else{
 			if(!itemUpdated){
-				console.log("Imposible actualizar");
+				res.status(404).send({
+					message: 'Imposible actualizar item',
+			    });
 			}else{
+				res.status(200).send({
+					item: itemUpdated,
+				});
 			}
 		}
 	});
@@ -82,7 +80,7 @@ function actualizaItem(item){
 //================================================
 function itemUltimo(req,res){
 	//OJO CAMBIAR NOMBRE DE COLLECCION Y CAMPOS SEGÚN LA CONSULTA
-	Bateriaharnero.findOne({}) 
+	Idharnero.findOne({}) 
 	   .exec(
 	   		(err, itemsFound) => {
 	   			if (err){
@@ -94,9 +92,9 @@ function itemUltimo(req,res){
 	   			}
 	   	});
 }
+
 module.exports = {
 	crearSensores,
 	actualizaItem,
 	itemUltimo
-
 };
