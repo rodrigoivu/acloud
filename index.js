@@ -14,12 +14,12 @@
 
 //app: archivo contiene funcionalidades de Express,para el armado de la infraestructura de la API
 var app = require('./app');
-// var socket = require('socket.io');
+var socket = require('socket.io');
 //Puerto para servir la API
 var port = process.env.PORT || 3782;
 
 //broker: es el servidor para mqtt
-// var broker = require('./broker');
+var broker = require('./broker');
 
 //Funciones para Publicar y Subscribir mediante mqtt
 
@@ -57,16 +57,14 @@ if (err) {
 
 	});
 
-	// const io = socket.listen(server);
-	// SubscriberController.asignarSocket(io);
-	// io.sockets.on('connection', (socket) => { 
-	// 	// socket.on('message', (data) => {
-	// 	// 	socket.emit('new message', {user: 'Servidor', message: 'Hola Cliente'});
- //  //          console.log(data);
- //  //       });
-          
- //          PublisherController.recibeOrden(socket);
-
-	// });
+	const io = socket.listen(server,{
+					path: '/evento/socket.io'
+				});
+	
+	io.sockets.on('connection', (socket) => { 
+		subscriber.asignarSocket(socket,io);
+		bateriaharnero.asignarSocket(socket,io);
+		bateriachancador.asignarSocket(socket,io);
+	});
 }
 });

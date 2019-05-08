@@ -3,6 +3,9 @@
 var Bateriachancador = require('../models/bateriachancador');
 var idItem;
 
+var socketLocal; // se rescata del index.js
+var ioLocal; // se rescata del index.js
+
 //================================================
 // CREAR UN ITEM
 //================================================
@@ -73,6 +76,7 @@ function actualizaItem(item){
 			if(!itemUpdated){
 				console.log("Imposible actualizar");
 			}else{
+				mensajeBateriaChancador(itemA);
 			}
 		}
 	});
@@ -95,8 +99,20 @@ function itemUltimo(req,res){
 	   	});
 }
 
+function asignarSocket(socket,io){
+    socketLocal=socket;
+    ioLocal=io;
+}
+
+function mensajeBateriaChancador(data){
+	if(socketLocal){
+		ioLocal.emit('BateriaChancador',{data: data});
+	}
+}
+
 module.exports = {
 	crearSensores,
 	actualizaItem,
-	itemUltimo
+	itemUltimo,
+	asignarSocket
 };

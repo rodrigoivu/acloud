@@ -3,6 +3,9 @@
 var Bateriaharnero = require('../models/bateriaharnero');
 var idItem;
 
+var socketLocal; // se rescata del index.js
+var ioLocal; // se rescata del index.js
+
 //================================================
 // CREAR UN ITEM
 //================================================
@@ -73,6 +76,7 @@ function actualizaItem(item){
 			if(!itemUpdated){
 				console.log("Imposible actualizar");
 			}else{
+				mensajeBateriaHarnero(itemA);
 			}
 		}
 	});
@@ -94,9 +98,21 @@ function itemUltimo(req,res){
 	   			}
 	   	});
 }
+
+function asignarSocket(socket,io){
+    socketLocal=socket;
+    ioLocal=io;
+}
+
+function mensajeBateriaHarnero(data){
+	if(socketLocal){
+		ioLocal.emit('BateriaHarnero',{data: data});
+	}
+}
 module.exports = {
 	crearSensores,
 	actualizaItem,
-	itemUltimo
+	itemUltimo,
+	asignarSocket
 
 };

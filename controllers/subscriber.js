@@ -8,6 +8,8 @@ var Chancador = require('../models/chancador');
 var Controllerbateriaharnero = require('../controllers/bateriaharnero');
 var Controllerbateriachancador = require('../controllers/bateriachancador');
 
+var socketLocal; // se rescata del index.js
+var ioLocal; // se rescata del index.js
 //var client  = mqtt.connect('mqtt://192.168.0.8')
 var client  = mqtt.connect('mqtt://165.227.26.150') //esta conectado al mqtt de desimat
 client.on('connect', () => {
@@ -187,7 +189,7 @@ function saveHarnero(item){
 			if(!itemStored){
 				//console.log('Imposible registrar item');
 			}else{
-				//console.log('Item insertado');
+				mensajeEsfuerzoHarnero(harnero);
 			}
 		}
 	});
@@ -205,7 +207,7 @@ function saveChancador(item){
 			if(!itemStored){
 				//console.log('Imposible registrar item');
 			}else{
-				//console.log('Item insertado');
+				mensajeEsfuerzoChancador(chancador);
 			}
 		}
 	});
@@ -238,3 +240,24 @@ function insertaRotopalauno(items){
 	});
 
 }
+
+function asignarSocket(socket,io){
+    socketLocal=socket;
+    ioLocal=io;
+}
+
+function mensajeEsfuerzoHarnero(data){
+	if(socketLocal){
+		ioLocal.emit('EsfuerzoHarnero',{data: data});
+	}
+}
+
+function mensajeEsfuerzoChancador(data){
+	if(socketLocal){
+		ioLocal.emit('EsfuerzoChancador',{data: data});
+	}
+}
+
+module.exports = {
+	asignarSocket
+};
