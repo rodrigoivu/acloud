@@ -133,7 +133,7 @@ function usuariosPaginados(req,res){
 // MOSTRAR TODOS LOS USUARIOS 
 //================================================
 function usuariosTodos(req,res){
-	User.find({},'name email image role')
+	User.find({},'name email image role services')
 	   .sort([['name', 1]])	
 	   .exec(
 	   		(err, usuarios) => {

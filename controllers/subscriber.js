@@ -26,6 +26,8 @@ client.on('message', (topic, message) => {
 
     var items;
    	items = JSON.parse(message);
+ 	
+
 	// if(topic == 'aplik/humedad/rotopalauno'){
 	// 	for (var i = 0; i < items.length; i++) {
 	// 	items[i].timestamp= new Date(items[i].timestamp); 

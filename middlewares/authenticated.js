@@ -28,7 +28,7 @@
 
  exports.ensureAdmin = function(req, res, next){
  	var usuario = req.user;
- 	if ( usuario.role === 'ADMIN_APLIK' || usuario.role === 'ADMIN_ROLE' ){
+ 	if ( usuario.role === 'ADMIN_ROLE' ){
  		next();
  		return;
  	} else {
@@ -45,7 +45,7 @@
  	var usuario = req.user; // viene del decode del token
  	var id = req.params.id; // viene del parametro :id, que se pone en la url.
 
- 	if ( usuario.role === 'ADMIN_ROLE' || usuario.role === 'ADMIN_APLIK' || req.user.sub === id ){  // el sub se crea en el token
+ 	if ( usuario.role === 'ADMIN_ROLE' || req.user.sub === id ){  // el sub se crea en el token
  		next();
  		return;
  	} else {
@@ -61,7 +61,7 @@
 
  	var usuario = req.user; // viene del decode del token
  	
- 	if ( usuario.role === 'ADMIN_APLIK' || usuario.role === 'ADMIN_ROLE' || usuario.role === 'USER_AVANZADO'  ){
+ 	if ( usuario.role === 'ADMIN_ROLE' || usuario.role === 'USER_ROLE'  ){
  		next();
  		return;
  	} else {
@@ -70,14 +70,16 @@
  }
 
 //================================================
-// Verificar ADMIN o USUARIO AVANZADO o HUMEDAD
+// Verificar ADMIN o USUARIO  o HUMEDAD
 //================================================
-
- exports.ensureAdminAvanzadoHumedad = function(req, res, next){
+//SERVICIO 1
+ exports.ensureAdminUserHumedad = function(req, res, next){
 
   var usuario = req.user; // viene del decode del token
+  var servicios = usuario.services;
+  var servicio = servicios[0];
   
-  if ( usuario.role === 'ADMIN_APLIK' || usuario.role === 'ADMIN_ROLE' || usuario.role === 'USER_AVANZADO' || usuario.role === 'USER_HUMEDAD' ){
+  if ( usuario.role === 'ADMIN_ROLE' || usuario.role === 'USER_ROLE' || servicio === '1' ){
     next();
     return;
   } else {
@@ -86,14 +88,16 @@
  }
 
 //================================================
-// Verificar ADMIN o USUARIO AVANZADO o ESFUERZO
+// Verificar ADMIN o USUARIO  o ESFUERZO
 //================================================
-
- exports.ensureAdminAvanzadoEsfuerzo = function(req, res, next){
+//SERVICIO 2
+ exports.ensureAdminUserEsfuerzo = function(req, res, next){
 
   var usuario = req.user; // viene del decode del token
-  
-  if ( usuario.role === 'ADMIN_APLIK' || usuario.role === 'ADMIN_ROLE' || usuario.role === 'USER_AVANZADO' || usuario.role === 'USER_ESFUERZO' ){
+  var servicios = usuario.services;
+  var servicio = servicios[1];
+
+  if ( usuario.role === 'ADMIN_ROLE' || usuario.role === 'USER_ROLE' || servicio === '1' ){
     next();
     return;
   } else {
@@ -101,5 +105,41 @@
   }
  }
 
+//================================================
+// Verificar ADMIN o USUARIO  o PISCINA
+//================================================
+//SERVICIO 3
+ exports.ensureAdminUserPiscina = function(req, res, next){
+
+  var usuario = req.user; // viene del decode del token
+  var servicios = usuario.services;
+  var servicio = servicios[2];
+
+  if ( usuario.role === 'ADMIN_ROLE' || usuario.role === 'USER_ROLE' || servicio === '1' ){
+    next();
+    return;
+  } else {
+      return res.status(404).send({message:'Token no válido - No está autorizado' });
+  }
+ }
+
+
+//================================================
+// Verificar ADMIN o USUARIO  o PILAS
+//================================================
+//SERVICIO 3
+ exports.ensureAdminUserPila = function(req, res, next){
+
+  var usuario = req.user; // viene del decode del token
+  var servicios = usuario.services;
+  var servicio = servicios[3];
+
+  if ( usuario.role === 'ADMIN_ROLE' || usuario.role === 'USER_ROLE' || servicio === '1' ){
+    next();
+    return;
+  } else {
+      return res.status(404).send({message:'Token no válido - No está autorizado' });
+  }
+ }
 
  

@@ -13,7 +13,8 @@ exports.createToken = function(user){
 		email: user.email,
 		role: user.role,
 		image: user.image,
-		estado: user.estado
+		estado: user.estado,
+		services:user.services
 		//iat: moment().unix(),
 		//exp: moment().add(30,'days').unix
 	};

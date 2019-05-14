@@ -6,6 +6,6 @@ var BateriachancadorController = require ('../controllers/bateriachancador');
 var api = express.Router();
 var md_auth = require('../middlewares/authenticated');
                                      
-api.get('/bateriachancador-ultimo',[md_auth.ensureAuth,md_auth.ensureAdminAvanzadoEsfuerzo], BateriachancadorController.itemUltimo);
+api.get('/bateriachancador-ultimo',[md_auth.ensureAuth,md_auth.ensureAdminUserEsfuerzo], BateriachancadorController.itemUltimo);
 
 module.exports = api;
