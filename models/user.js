@@ -17,7 +17,7 @@ var UserSchema = new Schema({
 	role: { type: String, required: true, default: 'INITIAL_ROLE', enum: rolesValidos},
 	image: { type: String, required: false, default: '',},
 	estado: { type: Number, required: false, default: 1,},
-	services:{ type: String, required: false, default: '0000',} // servicio 1,2,3,4 1:Humedad 2:esfuerzo 3:pila 4 :piscina
+	services:{ type: String, required: false, default: '0',} // 
 
 });
 
