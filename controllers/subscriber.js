@@ -4,7 +4,11 @@ var Rotopalados = require('../models/rotopalados');
 var Spreader = require('../models/spreader');
 var Estacion = require('../models/estacion');
 var Harnero = require('../models/harnero');
+var Harnerodata = require('../models/harnerodata');
+var Idharnero = require('../models/idharnero');
+var Idchancador = require('../models/idchancador');
 var Chancador = require('../models/chancador');
+var Chancadordata = require('../models/chancadordata');
 var Controllerbateriaharnero = require('../controllers/bateriaharnero');
 var Controllerbateriachancador = require('../controllers/bateriachancador');
 
@@ -17,9 +21,12 @@ client.on('connect', () => {
     client.subscribe('aplik/humedad/rotopalados');
     client.subscribe('aplik/humedad/spreader');
     client.subscribe('aplik/humedad/estacion');
-    client.subscribe('aplik/esfuerzo/harnero');
-    client.subscribe('aplik/esfuerzo/chancador');
+    // client.subscribe('aplik/esfuerzo/harnero');
+    client.subscribe('aplik/esfuerzo/harnerodata');
+    client.subscribe('aplik/esfuerzo/chancadordata');
+    // client.subscribe('aplik/esfuerzo/chancador');
     client.subscribe('aplik/esfuerzo/bateriaharnero');
+    //client.subscribe('aplik/esfuerzo/bateriaharnero1');
     client.subscribe('aplik/esfuerzo/bateriachancador');
 })
 client.on('message', (topic, message) => {
@@ -59,22 +66,44 @@ client.on('message', (topic, message) => {
 		saveEstacion(items);
 	}
 
-	if(topic == 'aplik/esfuerzo/harnero'){
+	// if(topic == 'aplik/esfuerzo/harnero'){
+	// 	//items.timestamp= new Date(items.timestamp);
+	// 	items.timestamp= new Date(date); 
+	// 	saveHarnero(items);
+	// }
+	if(topic == 'aplik/esfuerzo/harnerodata'){
 		//items.timestamp= new Date(items.timestamp);
-		items.timestamp= new Date(date); 
-		saveHarnero(items);
+		//items.timestamp= new Date(date); 
+		let tm=new Date(items.tm);
+		//tm.setHours(tm.getHours()-8);
+		items.tm = tm;
+		saveHarnerodata(items);
 	}
 	if(topic == 'aplik/esfuerzo/chancador'){
 		//items.timestamp= new Date(items.timestamp);
 		items.timestamp= new Date(date); 
 		saveChancador(items);
 	}
+	if(topic == 'aplik/esfuerzo/chancadordata'){
+		//items.timestamp= new Date(items.timestamp);
+		//items.timestamp= new Date(date); 
+		let tm=new Date(items.tm);
+		//tm.setHours(tm.getHours()-8);
+		items.tm = tm;
+		saveChancadordata(items);
+	}
 	if(topic == 'aplik/esfuerzo/bateriaharnero'){
-		//items.timestamp= new Date(items.timestamp); 
+		//items.timestamp= new Date(items.timestamp);
+		let tm=new Date(items.tm);
+		//tm.setHours(tm.getHours()-8);
+		items.tm = tm;
 		saveBateriaHarnero(items);
 	}
 	if(topic == 'aplik/esfuerzo/bateriachancador'){
-		//items.timestamp= new Date(items.timestamp); 
+		//items.timestamp= new Date(items.timestamp);
+		let tm=new Date(items.tm);
+		//tm.setHours(tm.getHours()-8);
+		items.tm = tm;
 		saveBateriaChancador(items);
 	}
 	
@@ -182,43 +211,110 @@ function saveRotopalaUnoHumedad(item){
 //================================================
 // SAVE ESFUERZO HARNERO
 //================================================
-function saveHarnero(item){
-	var harnero = new Harnero(item);
-	harnero.save((err, itemStored) => {
-		if(err){
-			return console.error(err);
-		}else{
-			if(!itemStored){
-				//console.log('Imposible registrar item');
-			}else{
-				mensajeEsfuerzoHarnero(harnero);
-			}
-		}
-	});
+// function saveHarnero(item){
+// 	var harnero = new Harnero(item);
+// 	harnero.save((err, itemStored) => {
+// 		if(err){
+// 			return console.error(err);
+// 		}else{
+// 			if(!itemStored){
+// 				//console.log('Imposible registrar item');
+// 			}else{
+// 				mensajeEsfuerzoHarnero(harnero);
+// 			}
+// 		}
+// 	});
+// }
+//================================================
+// SAVE ESFUERZO HARNERO
+//================================================
+function saveHarnerodata(item){
+	var harnerodata = new Harnerodata(item);
+	Idharnero.findOne({}) 
+	   .exec(
+	   		(err, itemsFound) => {
+	   			if (err){
+	   				console.log(err);
+	   			}else{
+	   				let itemIdh = itemsFound;
+	   				let sensores = [ parseInt(itemIdh.sensor_1),parseInt(itemIdh.sensor_2),
+	   								 parseInt(itemIdh.sensor_3),parseInt(itemIdh.sensor_4),
+	   								 parseInt(itemIdh.sensor_5),parseInt(itemIdh.sensor_6)];
+			 		var idx = sensores.indexOf(item.idn);  
+			 		if(idx > -1){
+			 			harnerodata.idn=idx
+			 			harnerodata.save((err, itemStored) => {
+							if(err){
+								return console.error(err);
+							}else{
+								if(!itemStored){
+									//console.log('Imposible registrar item');
+								}else{
+									mensajeEsfuerzoHarnerodata(harnerodata);
+								}
+							}
+						});
+			 		}
+	   			}
+	   	});
 }
+//================================================
+// SAVE ESFUERZO CHANCADOR
+//================================================
+// function saveChancador(item){
+// 	var chancador = new Chancador(item);
+// 	chancador.save((err, itemStored) => {
+// 		if(err){
+// 			return console.error(err);
+// 		}else{
+// 			if(!itemStored){
+// 				//console.log('Imposible registrar item');
+// 			}else{
+// 				mensajeEsfuerzoChancador(chancador);
+// 			}
+// 		}
+// 	});
+// }
 
 //================================================
 // SAVE ESFUERZO CHANCADOR
 //================================================
-function saveChancador(item){
-	var chancador = new Chancador(item);
-	chancador.save((err, itemStored) => {
-		if(err){
-			return console.error(err);
-		}else{
-			if(!itemStored){
-				//console.log('Imposible registrar item');
-			}else{
-				mensajeEsfuerzoChancador(chancador);
-			}
-		}
-	});
+function saveChancadordata(item){
+    var chancadordata = new Chancadordata(item);
+	Idchancador.findOne({}) 
+	   .exec(
+	   		(err, itemsFound) => {
+	   			if (err){
+	   				console.log(err);
+	   			}else{
+	   				let itemIdh = itemsFound;
+	   				let sensores = [ parseInt(itemIdh.sensor_1),parseInt(itemIdh.sensor_2),
+	   								 parseInt(itemIdh.sensor_3),parseInt(itemIdh.sensor_4),
+	   								 parseInt(itemIdh.sensor_5),parseInt(itemIdh.sensor_6)];
+			 		var idx = sensores.indexOf(item.idn);  
+			 		if(idx > -1){
+			 			chancadordata.idn=idx
+			 			chancadordata.save((err, itemStored) => {
+							if(err){
+								return console.error(err);
+							}else{
+								if(!itemStored){
+									//console.log('Imposible registrar item');
+								}else{
+									mensajeEsfuerzoChancadordata(chancadordata);
+								}
+							}
+						});
+			 		}
+	   			}
+	   	});
 }
 
 //================================================
 // SAVE BATERIA HARNERO
 //================================================
 function saveBateriaHarnero(item){
+  //0:bien 1:baja 2: critica 3:inactiva
 	Controllerbateriaharnero.actualizaItem(item);
 }
 
@@ -253,10 +349,20 @@ function mensajeEsfuerzoHarnero(data){
 		ioLocal.emit('EsfuerzoHarnero',{data: data});
 	}
 }
-
-function mensajeEsfuerzoChancador(data){
+function mensajeEsfuerzoHarnerodata(data){
 	if(socketLocal){
-		ioLocal.emit('EsfuerzoChancador',{data: data});
+		ioLocal.emit('EsfuerzoHarnerodata',{data: data});
+	}
+}
+
+// function mensajeEsfuerzoChancador(data){
+// 	if(socketLocal){
+// 		ioLocal.emit('EsfuerzoChancador',{data: data});
+// 	}
+// }
+function mensajeEsfuerzoChancadordata(data){
+	if(socketLocal){
+		ioLocal.emit('EsfuerzoChancadordata',{data: data});
 	}
 }
 

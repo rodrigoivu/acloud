@@ -11,8 +11,10 @@ var app = express();
 var user_routes = require('./routes/user');
 var sendmail_routes = require('./routes/sendmail');
 var chancador_routes = require('./routes/chancador');
+var chancadordata_routes = require('./routes/chancadordata');
 var estacion_routes = require('./routes/estacion');
 var harnero_routes = require('./routes/harnero');
+var harnerodata_routes = require('./routes/harnerodata');
 var rotopalados_routes = require('./routes/rotopalados');
 var rotopalauno_routes = require('./routes/rotopalauno');
 var spreader_routes = require('./routes/spreader');
@@ -23,6 +25,10 @@ var idharnero_routes = require('./routes/idharnero');
 var idchancador_routes = require('./routes/idchancador');
 var evaporacionpiscinadata_routes = require('./routes/evaporacionpiscinadata');
 var evaporacionpiscinaobjeto_routes = require('./routes/evaporacionpiscinaobjeto');
+var evaporacionpilasdata_routes = require('./routes/evaporacionpilasdata');
+var evaporacionpilasobjeto_routes = require('./routes/evaporacionpilasobjeto');
+var configpiscina_routes = require('./routes/configpiscina');
+var configpilas_routes = require('./routes/configpilas');
 // create application/x-www-form-urlencoded parser
 app.use(bodyParser.urlencoded({extended:false}));
 // create application/json parser
@@ -41,8 +47,10 @@ app.use('/',express.static('client', { redirect: false }));
 app.use('/api', user_routes);
 app.use('/api', sendmail_routes);
 app.use('/api', chancador_routes);
+app.use('/api', chancadordata_routes);
 app.use('/api', estacion_routes);
 app.use('/api', harnero_routes);
+app.use('/api', harnerodata_routes);
 app.use('/api', rotopalados_routes);
 app.use('/api', rotopalauno_routes);
 app.use('/api', spreader_routes);
@@ -53,6 +61,10 @@ app.use('/api', idharnero_routes);
 app.use('/api', idchancador_routes);
 app.use('/api', evaporacionpiscinadata_routes);
 app.use('/api', evaporacionpiscinaobjeto_routes);
+app.use('/api', evaporacionpilasdata_routes);
+app.use('/api', evaporacionpilasobjeto_routes);
+app.use('/api', configpiscina_routes);
+app.use('/api', configpilas_routes);
 
 app.get('*', function(req,res,next){
 	res.sendFile(path.resolve('./client/index.html'));

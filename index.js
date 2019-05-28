@@ -29,6 +29,8 @@ var bateriaharnero = require('./controllers/bateriaharnero');
 var bateriachancador = require('./controllers/bateriachancador');
 var idchancador = require('./controllers/idchancador');
 var idharnero = require('./controllers/idharnero');
+var configpilas = require('./controllers/configpilas');
+var configpiscina = require('./controllers/configpiscina');
 // var PublisherController = require('./controllers/publisher');
 //var Publisher = require('./publisher');
 
@@ -48,13 +50,14 @@ if (err) {
 	// });
 	//Conectar el Servidor de Api's mediante http
 	const server = app.listen(port, function(){
-    console.log("Servidor de Api's de desimat cloud escuchando en http://localhost:" + port);
-    //Consultar o crear estados de bateria
-    bateriaharnero.crearSensores();
-    bateriachancador.crearSensores();
-    idharnero.crearSensores();
-    idchancador.crearSensores();
-
+	    console.log("Servidor de Api's de desimat cloud escuchando en http://localhost:" + port);
+	    //Consultar o crear estados de bateria
+	    bateriaharnero.crearSensores();
+	    bateriachancador.crearSensores();
+	    idharnero.crearSensores();
+	    idchancador.crearSensores();
+	    configpilas.crearItem();
+	    configpiscina.crearItem();
 	});
 
 	const io = socket.listen(server,{

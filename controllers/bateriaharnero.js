@@ -1,6 +1,7 @@
 'use strict'
 //OJO CAMBIAR NOMBRE DE COLLECCION Y MODEL SEGÚN LA CONSULTA
 var Bateriaharnero = require('../models/bateriaharnero');
+var Idharnero = require('../models/idharnero');
 var idItem;
 
 var socketLocal; // se rescata del index.js
@@ -57,29 +58,74 @@ function crearSensores(){
 // ACTUALIZAR UN ITEM
 //================================================
 function actualizaItem(item){
-	var date = new Date;
-	//var date = new Date(item.timestamp); //ver si se asigna el tiempo aqui o desde el dato recibido
-	var itemA={
-			timestamp:date,
-			estado1:item.estado1,
-			estado2:item.estado2,
-			estado3:item.estado3,
-			estado4:item.estado4,
-			estado5:item.estado5,
-			estado6:item.estado6
-		  }
- 	//OJO CAMBIAR NOMBRE DE COLLECCION SEGÚN LA CONSULTA
-	Bateriaharnero.findByIdAndUpdate(idItem, itemA, { new: true }, (err, itemUpdated) => { 
-		if(err){
-			console.log("err: "+ err);
-		}else{
-			if(!itemUpdated){
-				console.log("Imposible actualizar");
-			}else{
-				mensajeBateriaHarnero(itemA);
-			}
-		}
-	});
+	var itemA;
+	Idharnero.findOne({}) 
+	   .exec(
+	   		(err, itemsFound) => {
+	   			if (err){
+	   				console.log(err);
+	   			}else{
+	   				let itemIdh = itemsFound;
+	   				let sensores = [ parseInt(itemIdh.sensor_1),parseInt(itemIdh.sensor_2),
+	   								 parseInt(itemIdh.sensor_3),parseInt(itemIdh.sensor_4),
+	   								 parseInt(itemIdh.sensor_5),parseInt(itemIdh.sensor_6)];
+			 		var idx = sensores.indexOf(item.idn);  
+			 		if(idx > -1){
+			 			switch (idx) {
+			              case 0:
+			                itemA={
+									timestamp:item.tm,
+									estado1:item.flag,
+								  }
+			                break;
+			              case 1:
+			                itemA={
+									timestamp:item.tm,
+									estado2:item.flag,
+								  }
+			                break;
+			              case 2:
+			                itemA={
+									timestamp:item.tm,
+									estado3:item.flag,
+								  }
+			                break;
+			              case 3:
+			                itemA={
+									timestamp:item.tm,
+									estado4:item.flag,
+								  }
+			                break;
+			              case 4:
+			                itemA={
+									timestamp:item.tm,
+									estado5:item.flag,
+								  }
+			                break;
+			              case 5:
+			                itemA={
+									timestamp:item.tm,
+									estado6:item.flag,
+								  }
+			                break;        
+			              default:
+			                break;
+			            }
+			            Bateriaharnero.findByIdAndUpdate(idItem, itemA, { new: true }, (err, itemUpdated) => { 
+							if(err){
+								console.log("err: "+ err);
+							}else{
+								if(!itemUpdated){
+									console.log("Imposible actualizar");
+								}else{
+									mensajeBateriaHarnero(itemUpdated);
+								}
+							}
+						});
+			 		}
+	   			}
+	   	});
+
 }
 //================================================
 // ENCUENTRA EL ULTIMO
