@@ -31,7 +31,7 @@ function registraItem(){
 				console.log("sin datos");
 			}else{
 				idItem=itemStored._id;
-				console.log("idItemChancador: "+idItem);
+				console.log("idBateriaChancador: "+idItem);
 			}
 		}
 	});

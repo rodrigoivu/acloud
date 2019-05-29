@@ -31,6 +31,7 @@ var idchancador = require('./controllers/idchancador');
 var idharnero = require('./controllers/idharnero');
 var configpilas = require('./controllers/configpilas');
 var configpiscina = require('./controllers/configpiscina');
+var configesfuerzo = require('./controllers/configesfuerzo');
 // var PublisherController = require('./controllers/publisher');
 //var Publisher = require('./publisher');
 
@@ -58,6 +59,7 @@ if (err) {
 	    idchancador.crearSensores();
 	    configpilas.crearItem();
 	    configpiscina.crearItem();
+	    configesfuerzo.crearItem();
 	});
 
 	const io = socket.listen(server,{

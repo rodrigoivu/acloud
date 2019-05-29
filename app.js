@@ -29,6 +29,7 @@ var evaporacionpilasdata_routes = require('./routes/evaporacionpilasdata');
 var evaporacionpilasobjeto_routes = require('./routes/evaporacionpilasobjeto');
 var configpiscina_routes = require('./routes/configpiscina');
 var configpilas_routes = require('./routes/configpilas');
+var configesfuerzo_routes = require('./routes/configesfuerzo');
 // create application/x-www-form-urlencoded parser
 app.use(bodyParser.urlencoded({extended:false}));
 // create application/json parser
@@ -65,6 +66,7 @@ app.use('/api', evaporacionpilasdata_routes);
 app.use('/api', evaporacionpilasobjeto_routes);
 app.use('/api', configpiscina_routes);
 app.use('/api', configpilas_routes);
+app.use('/api', configesfuerzo_routes);
 
 app.get('*', function(req,res,next){
 	res.sendFile(path.resolve('./client/index.html'));
