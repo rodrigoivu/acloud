@@ -69,7 +69,7 @@ function itemsRangoUltimos(req,res){
 	Chancadordata.find({'idn': idnode})
 	   .skip(0)
 	   .limit(items)
-	   .sort([['timestamp', -1]]) //no tiene indice es mas lento
+	   .sort([['tm', -1]]) //no tiene indice es mas lento
 	   //.sort({ _id: 'desc' }) //con esta es mas rápido pero solo si las fechas estan en orden
 	   .exec(
 	   		(err, itemsFound) => {
@@ -107,9 +107,9 @@ function itemsRangoFechas(req,res){
 					    '$lte': (new Date(hasta)).getTime()
 						}
 					})
-	   .sort([['timestamp', 1]])
+	   .sort([['tm', 1]])
 	   //.sort({ _id: 'asc' })
-	   .maxTimeMS(300)
+	   //.maxTimeMS(300)
 	   .exec(
 	   		(err, itemsFound) => {
 	   			if (err){

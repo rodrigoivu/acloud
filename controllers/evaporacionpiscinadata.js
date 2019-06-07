@@ -39,8 +39,8 @@ function itemsTodos(req,res){
 
 	//OJO CAMBIAR NOMBRE DE COLLECCION Y CAMPOS SEGÚN LA CONSULTA
 	Evaporacionpiscinadata.find({}) 
-	   //.sort([['timestamp', 1]])
-	   .sort({ _id: 'asc' })
+	   .sort([['tm', 1]])
+	   //.sort({ _id: 'asc' })
 	   .exec(
 	   		(err, itemsFound) => {
 	   			if (err){
@@ -62,15 +62,16 @@ function itemsTodos(req,res){
 //================================================
 // MOSTRAR RANGO LOS ITEMS 
 //================================================
-function itemsRangoTiempoReal(req,res){
+function itemsRangoUltimos(req,res){
 	var items = req.query.items || 1000;
 	items = Number(items);
+	idnode = Number(idnode);
 	//OJO CAMBIAR NOMBRE DE COLLECCION Y CAMPOS SEGÚN LA CONSULTA
-	Evaporacionpiscinadata.find({})
+	Evaporacionpiscinadata.find({'idn': idnode})
 	   .skip(0)
 	   .limit(items)
-	   //.sort([['timestamp', -1]])
-	   .sort({ _id: 'desc' })
+	   .sort([['tm', -1]])
+	   //.sort({ _id: 'desc' })
 	   .exec(
 	   		(err, itemsFound) => {
 	   			if (err){
@@ -97,14 +98,15 @@ function itemsRangoTiempoReal(req,res){
 function itemsRangoFechas(req,res){
 	var desde = req.query.desde;
 	var hasta = req.query.hasta;
+	var idnode = req.query.idnode;
 	//OJO CAMBIAR NOMBRE DE COLLECCION Y CAMPOS SEGÚN LA CONSULTA
-	Evaporacionpiscinadata.find({timestamp : {
+	Evaporacionpiscinadata.find({'idn': idnode, tm : {
 					    '$gte': (new Date(desde)).getTime(),
 					    '$lte': (new Date(hasta)).getTime()
 						}
 					})
-	   //.sort([['timestamp', 1]])
-	   .sort({ _id: 'asc' })
+	   .sort([['tm', 1]])
+	   //.sort({ _id: 'asc' })
 	   .exec(
 	   		(err, itemsFound) => {
 	   			if (err){
@@ -149,7 +151,7 @@ function deleteItem(req,res){
 module.exports = {
 	registraItem,
 	itemsTodos,
-	itemsRangoTiempoReal,
+	itemsRangoUltimos,
 	deleteItem,
 	itemsRangoFechas
 

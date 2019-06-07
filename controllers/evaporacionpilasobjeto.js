@@ -62,7 +62,6 @@ function itemsTodos(req,res){
 
 	//OJO CAMBIAR NOMBRE DE COLLECCION Y CAMPOS SEGÚN LA CONSULTA
 	Evaporacionpilasobjeto.find({}) 
-	   .sort([['timestamp', 1]])	
 	   .exec(
 	   		(err, itemsFound) => {
 	   			if (err){

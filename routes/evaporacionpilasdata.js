@@ -12,6 +12,6 @@ var md_auth = require('../middlewares/authenticated');
  api.post('/registra-evaporacionpilasdata',[md_auth.ensureAuth, md_auth.ensureAdminUserPila], EvaporacionpilasdataController.registraItem);
  api.get('/evaporacionpilasdata-todos',[md_auth.ensureAuth,md_auth.ensureAdminUserPila], EvaporacionpilasdataController.itemsTodos);
  api.get('/evaporacionpilasdata-rango-fechas',[md_auth.ensureAuth,md_auth.ensureAdminUserPila], EvaporacionpilasdataController.itemsRangoFechas);
- api.get('/evaporacionpilasdata-rango-tiempo-real',[md_auth.ensureAuth,md_auth.ensureAdminUserPila], EvaporacionpilasdataController.itemsRangoTiempoReal);
+ api.get('/evaporacionpilasdata-rango-ultimos',[md_auth.ensureAuth,md_auth.ensureAdminUserPila], EvaporacionpilasdataController.itemsRangoUltimos);
  api.delete('/borra-evaporacionpilasdata/:id',[md_auth.ensureAuth,md_auth.ensureAdminUserPila], EvaporacionpilasdataController.deleteItem);
 module.exports = api;

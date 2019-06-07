@@ -7,6 +7,8 @@ var EvaporacionpiscinaobjetoSchema = new Schema({
 
 	name: { type: String, required: false},
 	tipo: { type: String, required: false}, //barra o circulo
+	idn: { type: Number, required: false},
+	ch: { type: Number, required: false},
 	unidad: { type: String, required: false},
 	valor: { type: Number, required: false},
 	posx: { type: Number, required: false},

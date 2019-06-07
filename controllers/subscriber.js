@@ -9,6 +9,8 @@ var Idharnero = require('../models/idharnero');
 var Idchancador = require('../models/idchancador');
 var Chancador = require('../models/chancador');
 var Chancadordata = require('../models/chancadordata');
+var Evaporacionpiscinadata = require('../models/evaporacionpiscinadata');
+var Evaporacionpilasdata = require('../models/evaporacionpilasdata');
 var Controllerbateriaharnero = require('../controllers/bateriaharnero');
 var Controllerbateriachancador = require('../controllers/bateriachancador');
 
@@ -28,6 +30,8 @@ client.on('connect', () => {
     client.subscribe('aplik/esfuerzo/bateriaharnero');
     //client.subscribe('aplik/esfuerzo/bateriaharnero1');
     client.subscribe('aplik/esfuerzo/bateriachancador');
+    client.subscribe('aplik/evapiscina/data');
+    client.subscribe('aplik/evapilas/data');
 })
 client.on('message', (topic, message) => {
 
@@ -105,6 +109,21 @@ client.on('message', (topic, message) => {
 		//tm.setHours(tm.getHours()-8);
 		items.tm = tm;
 		saveBateriaChancador(items);
+	}
+
+	// EVAPORACION PISCINA
+	if(topic == 'aplik/evapiscina/data'){
+		//console.log(items);
+		let tm=new Date(items.tm);
+		items.tm = tm;
+		saveEvapiscina(items);
+	}
+
+	// EVAPORACION PILAS
+	if(topic == 'aplik/evapilas/data'){
+		let tm=new Date(items.tm);
+		items.tm = tm;
+		saveEvapilas(items);
 	}
 	
 	
@@ -212,18 +231,18 @@ function saveRotopalaUnoHumedad(item){
 // SAVE ESFUERZO HARNERO
 //================================================
 // function saveHarnero(item){
-// 	var harnero = new Harnero(item);
-// 	harnero.save((err, itemStored) => {
-// 		if(err){
-// 			return console.error(err);
-// 		}else{
-// 			if(!itemStored){
-// 				//console.log('Imposible registrar item');
-// 			}else{
-// 				mensajeEsfuerzoHarnero(harnero);
-// 			}
-// 		}
-// 	});
+	// var harnero = new Harnero(item);
+	// harnero.save((err, itemStored) => {
+	// 	if(err){
+	// 		return console.error(err);
+	// 	}else{
+	// 		if(!itemStored){
+	// 			//console.log('Imposible registrar item');
+	// 		}else{
+	// 			mensajeEsfuerzoHarnero(harnero);
+	// 		}
+	// 	}
+	// });
 // }
 //================================================
 // SAVE ESFUERZO HARNERO
@@ -324,6 +343,42 @@ function saveBateriaHarnero(item){
 function saveBateriaChancador(item){
 	Controllerbateriachancador.actualizaItem(item);
 }
+
+//================================================
+// SAVE DATOS PISCINA
+//================================================
+function saveEvapiscina (item){
+var evaporacionpiscinadata = new Evaporacionpiscinadata(item);
+	evaporacionpiscinadata.save((err, itemStored) => {
+		if(err){
+			return console.error(err);
+		}else{
+			if(!itemStored){
+				//console.log('Imposible registrar item');
+			}else{
+				mensajeEvapiscinadata(evaporacionpiscinadata);
+			}
+		}
+	});
+}
+
+//================================================
+// SAVE DATOS PILAS
+//================================================
+function saveEvapilas (item){
+var evaporacionpilasdata = new Evaporacionpilasdata(item);
+	evaporacionpilasdata.save((err, itemStored) => {
+		if(err){
+			return console.error(err);
+		}else{
+			if(!itemStored){
+				//console.log('Imposible registrar item');
+			}else{
+				mensajeEvapilasdata(evaporacionpilasdata);
+			}
+		}
+	});
+}
 //================================================
 // INSERTAR ROTOPALAUNO VARIOS
 //================================================
@@ -352,6 +407,17 @@ function mensajeEsfuerzoHarnero(data){
 function mensajeEsfuerzoHarnerodata(data){
 	if(socketLocal){
 		ioLocal.emit('EsfuerzoHarnerodata',{data: data});
+	}
+}
+
+function mensajeEvapiscinadata(data){
+	if(socketLocal){
+		ioLocal.emit('Evapiscinadata',{data: data});
+	}
+}
+function mensajeEvapilasdata(data){
+	if(socketLocal){
+		ioLocal.emit('Evapilasdata',{data: data});
 	}
 }
 
