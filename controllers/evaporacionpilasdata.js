@@ -64,6 +64,7 @@ function itemsTodos(req,res){
 //================================================
 function itemsRangoUltimos(req,res){
 	var items = req.query.items || 1000;
+	var idnode = req.query.idnode;
 	items = Number(items);
 	idnode = Number(idnode);
 	//OJO CAMBIAR NOMBRE DE COLLECCION Y CAMPOS SEGÚN LA CONSULTA
