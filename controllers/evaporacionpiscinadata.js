@@ -71,7 +71,7 @@ function itemsRangoUltimos(req,res){
 	Evaporacionpiscinadata.find({'idn': idnode})
 	   .skip(0)
 	   .limit(items)
-	   .sort([['tm', 1]])
+	   .sort([['tm', -1]])
 	   //.sort({ _id: 'desc' })
 	   .exec(
 	   		(err, itemsFound) => {
