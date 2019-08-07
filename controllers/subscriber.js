@@ -11,6 +11,8 @@ var Chancador = require('../models/chancador');
 var Chancadordata = require('../models/chancadordata');
 var Evaporacionpiscinadata = require('../models/evaporacionpiscinadata');
 var Evaporacionpilasdata = require('../models/evaporacionpilasdata');
+var Statepilas = require('../models/statepilas');
+var Statepiscina = require('../models/statepiscina');
 var Controllerbateriaharnero = require('../controllers/bateriaharnero');
 var Controllerbateriachancador = require('../controllers/bateriachancador');
 
@@ -32,6 +34,8 @@ client.on('connect', () => {
     client.subscribe('aplik/esfuerzo/bateriachancador');
     client.subscribe('aplik/evapiscina/data');
     client.subscribe('aplik/evapilas/data');
+    client.subscribe('aplik/statepiscina/data'); //Coeficientes de modelo de evaporacion piscina
+    client.subscribe('aplik/statepilas/data');	//Coeficientes de modelo de evaporacion pilas
 })
 client.on('message', (topic, message) => {
 
@@ -124,6 +128,20 @@ client.on('message', (topic, message) => {
 		let tm=new Date(items.tm);
 		items.tm = tm;
 		saveEvapilas(items);
+	}
+
+	// STATE EVAPORACION PILAS
+	if(topic == 'aplik/statepilas/data'){
+		let tm = new Date(items.tm);
+		items.tm = tm;
+		saveStatepilas(items);
+	}
+
+	// STATE EVAPORACION PISCINA
+	if(topic == 'aplik/statepiscina/data'){
+		let tm = new Date(items.tm);
+		items.tm = tm;
+		saveStatepiscina(items);
 	}
 	
 	
@@ -379,6 +397,44 @@ var evaporacionpilasdata = new Evaporacionpilasdata(item);
 		}
 	});
 }
+
+//================================================
+// SAVE STATE PILAS
+//================================================
+function saveStatepilas (item){
+var statepilas = new Statepilas(item);
+	statepilas.save((err, itemStored) => {
+		if(err){
+			return console.error(err);
+		}else{
+			if(!itemStored){
+				//console.log('Imposible registrar item');
+			}else{
+				//mensajeStatepilas(statepilas);
+			}
+		}
+	});
+}
+
+//================================================
+// SAVE STATE PISCINA
+//================================================
+function saveStatepilas (item){
+var statepiscina = new Statepiscina(item);
+	statepiscina.save((err, itemStored) => {
+		if(err){
+			return console.error(err);
+		}else{
+			if(!itemStored){
+				//console.log('Imposible registrar item');
+			}else{
+				//mensajeStatepiscina(statepiscina);
+			}
+		}
+	});
+}
+
+
 //================================================
 // INSERTAR ROTOPALAUNO VARIOS
 //================================================
