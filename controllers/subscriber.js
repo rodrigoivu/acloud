@@ -419,7 +419,7 @@ var statepilas = new Statepilas(item);
 //================================================
 // SAVE STATE PISCINA
 //================================================
-function saveStatepilas (item){
+function saveStatepiscina (item){
 var statepiscina = new Statepiscina(item);
 	statepiscina.save((err, itemStored) => {
 		if(err){
