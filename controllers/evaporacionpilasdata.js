@@ -99,6 +99,7 @@ function itemsRangoUltimos(req,res){
 function itemsRangoFechas(req,res){
 	var desde = req.query.desde;
 	var hasta = req.query.hasta;
+	var idnode = req.query.idnode;
 	idnode = Number(idnode);
 	//OJO CAMBIAR NOMBRE DE COLLECCION Y CAMPOS SEGÚN LA CONSULTA
 	Evaporacionpilasdata.find({'idn': idnode,tm : {
