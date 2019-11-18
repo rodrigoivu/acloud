@@ -37,8 +37,8 @@ function registraItem(req,res){
 function itemsTodos(req,res){
 	//OJO CAMBIAR NOMBRE DE COLLECCION Y CAMPOS SEGÚN LA CONSULTA
 	Rotopalauno.find({}) 
-	   //.sort([['timestamp', 1]])
-	   .sort({ _id: 'asc' })
+	   .sort([['timestamp', 1]])
+	   //.sort({ _id: 'asc' })
 	   .exec(
 	   		(err, itemsFound) => {
 	   			if (err){
@@ -67,7 +67,8 @@ function itemsRangoUltimos(req,res){
 	Rotopalauno.find({})
 	   .skip(0)
 	   .limit(items)
-	   .sort({ _id: 'desc' })	
+	   //.sort({ _id: 'desc' })	
+	   .sort([['timestamp', -1]])
 	   .exec(
 	   		(err, itemsFound) => {
 	   			if (err){
@@ -102,8 +103,8 @@ function itemsRangoFechas(req,res){
 					    '$lte': (new Date(hasta)).getTime()
 						}
 					})
-	   //.sort([['timestamp', 1]])
-	   .sort({ _id: 'asc' })	
+	   .sort([['timestamp', 1]])
+	   //.sort({ _id: 'asc' })	
 	   .exec(
 	   		(err, itemsFound) => {
 	   			if (err){
@@ -132,9 +133,9 @@ function itemsRangoFechas(req,res){
 function itemUltimo(req,res){
 	//OJO CAMBIAR NOMBRE DE COLLECCION Y CAMPOS SEGÚN LA CONSULTA
 	Rotopalauno.findOne({}) 
-	   //.sort([['timestamp', -1]])
+	   .sort([['timestamp', -1]])
 	   //.sort({ timestamp: 'desc' })
-	   .sort({ _id: 'desc' })
+	   //.sort({ _id: 'desc' })
 	   .limit(1)
 	   .exec(
 	   		(err, itemsFound) => {
