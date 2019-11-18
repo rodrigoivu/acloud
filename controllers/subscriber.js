@@ -51,26 +51,26 @@ client.on('message', (topic, message) => {
 	// }
 	var date = new Date;//MODIFICAR CON EL TIME STAMP LOCAL
 	if(topic == 'aplik/humedad/rotopalauno'){
-		//items.timestamp= new Date(items.timestamp);
-		items.timestamp= new Date(date); 
+		let tm=new Date(items.timestamp);
+		items.timestamp = tm;
 		saveRotopalaUnoHumedad(items);
 	}
 
 	if(topic == 'aplik/humedad/rotopalados'){
-		//items.timestamp= new Date(items.timestamp);
-		items.timestamp= new Date(date); 
+		let tm=new Date(items.timestamp);
+		items.timestamp = tm;
 		saveRotopalaDosHumedad(items);
 	}
 	
 	if(topic == 'aplik/humedad/spreader'){
-		//items.timestamp= new Date(items.timestamp);
-		items.timestamp= new Date(date); 
+		let tm=new Date(items.timestamp);
+		items.timestamp = tm;
 		saveSpreaderHumedad(items);
 	}
 
 	if(topic == 'aplik/humedad/estacion'){
-		//items.timestamp= new Date(items.timestamp);
-		items.timestamp= new Date(date); 
+		let tm=new Date(items.timestamp);
+		items.timestamp = tm;
 		saveEstacion(items);
 	}
 
@@ -85,6 +85,7 @@ client.on('message', (topic, message) => {
 		let tm=new Date(items.tm);
 		//tm.setHours(tm.getHours()-8);
 		items.tm = tm;
+
 		saveHarnerodata(items);
 	}
 	if(topic == 'aplik/esfuerzo/chancador'){
