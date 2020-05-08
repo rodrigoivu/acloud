@@ -161,6 +161,7 @@ function saveRotopalaUnoHumedad(item){
 				// console.log('Imposible registrar item');
 			}else{
 				// console.log('Item insertado');
+				mensajeRotoPalaUnoHumedad(rotopalauno);
 			}
 		}
 	});
@@ -179,6 +180,7 @@ function saveRotopalaDosHumedad(item){
 				// console.log('Imposible registrar item');
 			}else{
 				// console.log('Item insertado');
+				mensajeRotoPalaDosHumedad(rotopalados);
 			}
 		}
 	});
@@ -197,6 +199,7 @@ function saveSpreaderHumedad(item){
 				// console.log('Imposible registrar item');
 			}else{
 				// console.log('Item insertado');
+				mensajeSpreaderHumedad(spreader);
 			}
 		}
 	});
@@ -222,6 +225,7 @@ function saveEstacion(item){
 				// console.log('Imposible registrar item');
 			}else{
 				 //console.log('Item insertado');
+				 mensajeEstacionHumedad(estacion);
 			}
 		}
 	});
@@ -454,6 +458,30 @@ function insertaRotopalauno(items){
 function asignarSocket(socket,io){
     socketLocal=socket;
     ioLocal=io;
+}
+
+function mensajeRotoPalaUnoHumedad(data){
+	if(socketLocal){
+		ioLocal.emit('RotoPalaUnoData',{data: data});
+	}
+}
+
+function mensajeRotoPalaDosHumedad(data){
+	if(socketLocal){
+		ioLocal.emit('RotoPalaDosData',{data: data});
+	}
+}
+
+function mensajeSpreaderHumedad(data){
+	if(socketLocal){
+		ioLocal.emit('SpreaderData',{data: data});
+	}
+}
+
+function mensajeEstacionHumedad(data){
+	if(socketLocal){
+		ioLocal.emit('EstacionData',{data: data});
+	}
 }
 
 function mensajeEsfuerzoHarnero(data){
