@@ -105,7 +105,6 @@ function itemsRangoFechas(req,res){
 					})
 	   .sort([['timestamp', 1]])
 	   //.sort({ _id: 'asc' })
-	   .maxTimeMS(300)
 	   .exec(
 	   		(err, itemsFound) => {
 	   			if (err){
