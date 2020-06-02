@@ -69,9 +69,27 @@ client.on('message', (topic, message) => {
 	}
 
 	if(topic == 'aplik/humedad/estacion'){
+		var itemsEstacion = new Estacion;
+		var itemsSpreader = new Spreader;
 		let tm=new Date(items.timestamp);
-		items.timestamp = tm;
-		saveEstacion(items);
+		//items.timestamp = tm;
+
+		itemsEstacion = new Estacion({
+					   					timestamp       : tm,
+										humedadrelativa : items.humedadrelativa, 
+										temperatura     : items.temperatura,
+										radiacion       : items.radiacion,
+										presion         : items.presion,
+										direccionviento : items.direccionviento,
+										velocidadviento : items.velocidadviento
+					   				});
+		itemsSpreader = new Spreader({
+					   					timestamp : tm,
+										humedad   : items.humedad
+					   				});
+
+		saveEstacion(itemsEstacion);
+		saveSpreaderHumedad(itemsSpreader);
 	}
 
 	// if(topic == 'aplik/esfuerzo/harnero'){
