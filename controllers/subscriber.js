@@ -253,20 +253,20 @@ function saveEstacion(item){
 // SAVE HUMEDAD ROTOPALA UNO
 //================================================
 // {"timestamp":"08/02/18 14:04:10.000000000","humedad":123}
-function saveRotopalaUnoHumedad(item){
-	var rotopalauno = new Rotopalauno(item);
-	rotopalauno.save((err, itemStored) => {
-		if(err){
-			return console.error(err);
-		}else{
-			if(!itemStored){
-				//console.log('Imposible registrar item');
-			}else{
-				//console.log('Item insertado');
-			}
-		}
-	});
-}
+// function saveRotopalaUnoHumedad(item){
+// 	var rotopalauno = new Rotopalauno(item);
+// 	rotopalauno.save((err, itemStored) => {
+// 		if(err){
+// 			return console.error(err);
+// 		}else{
+// 			if(!itemStored){
+// 				//console.log('Imposible registrar item');
+// 			}else{
+// 				//console.log('Item insertado');
+// 			}
+// 		}
+// 	});
+// }
 
 //================================================
 // SAVE ESFUERZO HARNERO
