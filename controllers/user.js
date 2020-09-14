@@ -160,9 +160,11 @@ function usuariosTodos(req,res){
 function registraUsuario(req,res){
 	var user = new User(req.body);
 	var password = user.password;
+	var email = user.email;
 	
 	if(password){
 		user.password = bcrypt.hashSync(password,10);
+		user.email = email.toLowerCase();
 		if(user.name !=null  && user.email != null){
 			user.save((err, userStored) => {
 				if(err){

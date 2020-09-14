@@ -78,8 +78,15 @@ function itemsRangoUltimos(req,res){
 						res.status(404).send({message: 'Imposible mostrar información'});
 					}else{	
 		   				Spreader.countDocuments({}, (err,conteo) =>{
+		   					var itemsFilter=itemsFound.map( item => {
+                                    var hr= item.timestamp.getHours();
+                                    if(hr >=  8 & hr < 20 ){
+                                            item.humedad=0;
+                                    }
+                                    return item;
+                            });
 		   					res.status(200).send({
-								items: itemsFound,
+								items: itemsFilter,
 								total: conteo
 							});
 		   				});
@@ -115,8 +122,15 @@ function itemsRangoFechas(req,res){
 					}else{
 						//OJO CAMBIAR NOMBRE DE COLLECCION Y CAMPOS SEGÚN LA CONSULTA
 		   				Spreader.countDocuments({}, (err,conteo) =>{
+		   					var itemsFilter=itemsFound.map( item => {
+                                    var hr= item.timestamp.getHours();
+                                    if(hr >=  8 & hr < 20 ){
+                                            item.humedad=0;
+                                    }
+                                    return item;
+                            });
 		   					res.status(200).send({
-								items: itemsFound,
+								items: itemsFilter,
 								total: conteo
 							});
 		   				});
